@@ -1,0 +1,35 @@
+easyblock = 'PythonBundle'
+
+name = 'polars'
+version = '0.20.26'
+
+homepage = 'https://docs.pola.rs/'
+description = "Polars is a blazingly fast DataFrame library for manipulating structured data.
+               The core is written in Rust, and available for Python, R and NodeJS."
+
+toolchain = {'name': 'gfbf', 'version': '2023a'}
+
+dependencies = [
+    ('Python', '3.11.3'),
+    ('SciPy-bundle', '2023.07'),
+]
+
+use_pip = True
+
+exts_list = [
+    ('polars', '0.20.26', {
+        'source_urls': ['https://files.pythonhosted.org/packages/b8/ca/5280387f8aa6e62618e47882d3836324e2584611e1cea86ddf3ab4aa7f5c/'],
+        'sources': [{
+            'download_filename': 'polars-%(version)s-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl', 
+            'filename': 'polars-%(version)s-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl'}
+        ],
+        'checksums': ['db35d6eed508256a797c7f1b8e9dec4aae9c11b891797b2d38fac5627d072d34'],
+    }),
+]
+
+modextrapaths = {'PYTHONPATH': 'lib/python%(pyshortver)s/site-packages'}
+
+sanity_pip_check = True
+sanity_check_commands = ["python -c 'import polars'"]
+
+moduleclass = 'lang'

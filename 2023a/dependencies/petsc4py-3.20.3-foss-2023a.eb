@@ -1,0 +1,35 @@
+easyblock = 'PythonBundle'
+
+name = 'petsc4py'
+version = '3.20.3'
+
+homepage = 'https://petsc.org/release/'
+description = "PETSc, the Portable, Extensible Toolkit for Scientific Computation, pronounced PET-see (/ˈpɛt-siː/), is for the scalable (parallel) solution of scientific applications modeled by partial differential equations (PDEs). It has bindings for C, Fortran, and Python (via petsc4py). PETSc also contains TAO, the Toolkit for Advanced Optimization, software library. It supports MPI, and GPUs through CUDA, HIP, Kokkos, or OpenCL, as well as hybrid MPI-GPU parallelism; it also supports the NEC-SX Tsubasa Vector Engine. Immediately jump in and run PETSc code Tutorials, by Mathematical Problem."
+
+toolchain = {'name': 'foss', 'version': '2023a'}
+
+dependencies = [
+    ('Python', '3.11.3'),
+    ('SciPy-bundle', '2023.07'),
+    ('PETSc', '3.20.3'),
+]
+
+use_pip = True
+
+exts_list = [
+    ('petsc4py', '3.20.3', {
+        'source_urls': ['https://web.cels.anl.gov/projects/petsc/download/release-snapshots/'],
+        'sources': [{
+            'download_filename': 'petsc4py-3.20.3.tar.gz', 
+            'filename': 'petsc4py-3.20.3.tar.gz'}
+        ],
+        'checksums': ['8e10884df5ca38191b71294dc7e89f7479b18cca83fedfe27f89105e57c40785'],
+    }),
+]
+
+modextrapaths = {'PYTHONPATH': 'lib/python%(pyshortver)s/site-packages'}
+
+sanity_pip_check = True
+sanity_check_commands = ["python -c 'import petsc4py'"]
+
+moduleclass = 'lang'

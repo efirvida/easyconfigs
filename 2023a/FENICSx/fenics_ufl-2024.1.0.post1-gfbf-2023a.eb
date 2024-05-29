@@ -1,0 +1,25 @@
+easyblock = 'PythonPackage'
+
+name = 'fenics_ufl'
+version = '2024.1.0.post1'
+
+homepage = 'https://github.com/FEniCS/ufl'
+description = "The Unified Form Language (UFL) is a domain specific language for declaration of finite element discretizations of variational forms. More precisely, it defines a flexible interface for choosing finite element spaces and defining expressions for weak forms in a notation close to mathematical notation."
+
+toolchain = {'name': 'gfbf', 'version': '2023a'}
+
+sources = [SOURCE_TAR_GZ]
+checksums = ['c9f67607413e134a6672b426089f99ef055133f83ea4c1958f0659bd5a60720e']
+
+dependencies = [
+    ('Python', '3.11.3'),
+    ('SciPy-bundle', '2023.07'),
+]
+options = {'modulename': 'ufl'}
+
+download_dep_fail = True
+use_pip = True
+
+sanity_pip_check = False
+
+moduleclass = 'math'

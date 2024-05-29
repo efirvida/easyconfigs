@@ -1,0 +1,30 @@
+easyblock = 'PythonPackage'
+
+name = 'fenics_basix'
+version = '0.8.0'
+
+homepage = 'https://github.com/FEniCS/basix'
+description = "Basix is a finite element definition and tabulation runtime library."
+
+toolchain = {'name': 'gfbf', 'version': '2023a'}
+
+sources = [SOURCE_TAR_GZ]
+checksums = ['9b4b608b29b39b34e08b5501e2331943947be44cf839dd8b74ce4b532e950492']
+
+builddependencies = [
+    ('CMake', '3.26.3'),
+    ('pkg-config', '0.29.2'),
+]
+
+dependencies = [
+    ('Python', '3.11.3'),
+    ('SciPy-bundle', '2023.07'),
+]
+options = {'modulename': 'basix'}
+
+download_dep_fail = True
+use_pip = True
+
+sanity_pip_check = False
+
+moduleclass = 'math'

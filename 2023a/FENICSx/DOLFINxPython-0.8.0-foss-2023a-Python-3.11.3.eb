@@ -1,0 +1,42 @@
+easyblock = 'PythonPackage'
+
+name = 'DOLFINxPython'
+version = '0.8.0'
+versionsuffix = '-Python-%(pyver)s'
+
+homepage = 'https://fenicsproject.org/'
+description = "FEniCS is a computing platform for solving partial differential equations (PDEs)."
+
+toolchain = {'name': 'foss', 'version': '2023a'}
+toolchainopts = {'usempi': True}
+
+options = {'modulename': 'dolfinx'}
+
+source_urls = ['https://github.com/FEniCS/dolfinx/archive/']
+sources = ['v%(version)s.tar.gz']
+checksums = [
+    {'v%(version)s.tar.gz': 'acf3104d9ecc0380677a6faf69eabfafc58d0cce43f7777e1307b95701c7cad9'},
+]
+
+
+builddependencies = [
+    ('CMake', '3.26.3'),
+    ('pkg-config', '0.29.2'),
+    ('robinmap', '1.3.0'),
+]
+
+dependencies = [
+    ('Python', '3.11.3'),
+    ('petsc4py', '3.20.3'),
+    ('mpi4py', '3.1.4'),
+    ('DOLFINxCpp', '0.8.0'),
+]
+use_pip = True
+
+# force nanobind version lower than 2.0.0
+buildcmd = "pip install scikit-build-core[pyproject]>=0.5 nanobind==1.9.2"
+
+install_src = "--check-build-dependencies --no-build-isolation ./python"
+
+
+moduleclass = 'math'
