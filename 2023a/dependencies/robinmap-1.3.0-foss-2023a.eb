@@ -6,8 +6,7 @@ version = '1.3.0'
 homepage = 'https://github.com/Tessil/robin-map'
 description = "A C++ implementation of a fast hash map and hash set using robin hood hashing"
 
-toolchain = {'name': 'foss', 'version': '2023a'}
-toolchainopts = {'usempi': True}
+toolchain = {'name': 'gfbf', 'version': '2023a'}
 
 source_urls = ['https://github.com/Tessil/robin-map/archive/']
 sources = ['v%(version)s.tar.gz']
