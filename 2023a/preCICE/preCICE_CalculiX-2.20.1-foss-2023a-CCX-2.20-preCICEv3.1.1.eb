@@ -1,0 +1,77 @@
+easyblock = 'MakeCp'
+
+name = 'preCICE_CalculiX'
+version = '2.20.1'
+versionsuffix = '-CCX-2.20-preCICEv3.1.1'
+
+
+homepage = 'https://precice.org/adapter-calculix-overview.html'
+description = """CalcluiX version with preCICE adapter included.
+
+This adapter can be used to couple CalculiX to CFD solvers
+for fluid-structure interaction (FSI) or conjugate heat transfer (CHT)
+application or even to couple CalculiX to itself"""
+
+toolchain = {'name': 'foss', 'version': '2023a'}
+
+source_urls = ['https://github.com/precice/calculix-adapter/archive']
+sources = ['v%(version)s.tar.gz']
+
+
+dependencies = [
+    ('arpack-ng', '3.9.0'),
+    ('LAPACK', '3.10.1'),
+    ("preCICE", "3.1.1"),
+]
+
+builddependencies = [
+    ('Autotools', '20220317'),
+    ('SPOOLES', '2.2'),
+    ('CalculiX-CrunchiX', versionsuffix.split('-')[2]),
+    ('OpenMPI', '4.1.5'),
+    ('pkg-config', '0.29.2'),
+    ('yaml-cpp', '0.7.0'),
+]
+
+
+# set CalcluiX sources path
+build_cmd = "sed -i s'|$(HOME)/CalculiX/ccx_$(CCX_VERSION)|${EBROOTCALCULIXMINCRUNCHIX}|' Makefile &&"
+
+# set SPOOLES lib path
+build_cmd += "sed -i s'|-I/usr/include/spooles/|-I${EBROOTSPOOLES}/include/spooles|' Makefile &&"
+build_cmd += "sed -i s'|-lspooles|${EBROOTSPOOLES}/lib/libspooles.a|' Makefile &&"
+
+# set ARPACK lib path
+build_cmd += "sed -i s'|ARPACK_INCLUDE    =|ARPACK_INCLUDE    = -I${EBROOTARPACKMINNG}/include/arpack|' Makefile &&"
+build_cmd += "sed -i s'|-larpack -llapack -lblas| -llapack -lflexiblas ${EBROOTARPACKMINNG}/lib/libarpack.so|' Makefile &&"
+
+# set YAML-CPP lib path
+build_cmd += "sed -i s'|-I/usr/include/|-I${EBROOTYAMLMINCPP}/include/yaml-cpp|' Makefile &&"
+#build_cmd += "sed -i s'|-lyaml-cpp|-L${EBROOTYAMLMINCPP}/lib -lyaml-cpp|' Makefile &&"
+
+# set compilers path
+#build_cmd += "sed -i s'|/usr/local/bin/gcc|${EBROOTGCC}/bin/gcc|' Makefile &&"
+#build_cmd += "sed -i s'|mpicc|${EBROOTOENMPI}/bin/mpicc|' Makefile &&"
+#build_cmd += "sed -i s'|mpifort|${EBROOTOENMPI}/bin/mpifort|' Makefile &&"
+build_cmd += "sed -i s'|FFLAGS =|FFLAGS = -fallow-argument-mismatch|' Makefile &&"
+build_cmd += 'make LDFLAGS="-Wl,--copy-dt-needed-entries"'
+
+files_to_copy = [
+    (['bin/ccx_preCICE'], 'bin'),
+    (['bin/*'], 'src'),
+]
+
+postinstallcmds = ['cd %(installdir)s/bin && ln -sf ccx_preCICE ccx']
+
+sanity_check_paths = {
+    'files': ['bin/ccx'],
+    'dirs': [],
+}
+
+sanity_check_commands = [
+    # ccx {,-v} exit with code 201
+    "ccx | grep 'Usage: CalculiX.exe -i jobname'",
+    "ccx -v | grep 'Version 2.20'",
+]
+
+moduleclass = 'math'
