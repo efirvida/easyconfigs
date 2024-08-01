@@ -4,8 +4,8 @@ name = 'polars'
 version = '0.20.26'
 
 homepage = 'https://docs.pola.rs/'
-description = "Polars is a blazingly fast DataFrame library for manipulating structured data.
-               The core is written in Rust, and available for Python, R and NodeJS."
+description = """Polars is a blazingly fast DataFrame library for manipulating structured data.
+                 The core is written in Rust, and available for Python, R and NodeJS."""
 
 toolchain = {'name': 'gfbf', 'version': '2023a'}
 

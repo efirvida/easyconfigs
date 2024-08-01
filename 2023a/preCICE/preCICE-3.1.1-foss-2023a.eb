@@ -32,7 +32,7 @@ dependencies = [
     ('Boost', '1.82.0'),
     ('Eigen', '3.4.0'),
     ('libxml2', '2.11.4'),
-    ('PETSc', '3.21.1'),
+    ('PETSc', '3.20.3'),
     ('SCOTCH', '7.0.3'),
     ('OpenMPI', '4.1.5'),
     ('polars', '0.20.26'),
